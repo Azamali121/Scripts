@@ -30,16 +30,29 @@ function scheduled(type) {
 						var lastNameArray = lastName.split(' ');
 						if (lastNameArray != null && lastNameArray.length >= 2) {
 							nlapiSubmitField(result.getRecordType(), result.getId(), 'firstname', lastNameArray[0]);
-							nlapiSubmitField(result.getRecordType(), result.getId(), 'lastname', lastNameArray[1]);	
+							nlapiSubmitField(result.getRecordType(), result.getId(), 'lastname', lastNameArray[1]);
+							nlapiLogExecution('DEBUG', 'Internal ID of customer record processed', result.getId());
+						}
+						else{
+							nlapiSubmitField(result.getRecordType(), result.getId(), 'firstname', '-');
+							nlapiSubmitField(result.getRecordType(), result.getId(), 'lastname', lastName);
+							nlapiLogExecution('DEBUG', 'Internal ID of customer record processed', result.getId());
 						}
 						
 					}
 					else if (firstName) {
-						
+						firstName = firstName.trim();
 						var firstNameArray = firstName.split(' ');
-						nlapiSubmitField(result.getRecordType(), result.getId(), 'firstname', firstNameArray[0]);
-						nlapiSubmitField(result.getRecordType(), result.getId(), 'lastname', firstNameArray[1]);
-					}
+						if (firstNameArray != null && firstNameArray.length >= 2 ) {
+							nlapiSubmitField(result.getRecordType(), result.getId(), 'firstname', firstNameArray[0]);
+							nlapiSubmitField(result.getRecordType(), result.getId(), 'lastname', firstNameArray[1]);
+							nlapiLogExecution('DEBUG', 'Internal ID of customer record processed', result.getId());
+						} else {
+							nlapiSubmitField(result.getRecordType(), result.getId(), 'firstname', firstName);
+							nlapiSubmitField(result.getRecordType(), result.getId(), 'lastname', '-');
+							nlapiLogExecution('DEBUG', 'Internal ID of customer record processed', result.getId());
+						}
+						}
 					else{
 						nlapiLogExecution('DEBUG', 'First Name and Last Name are empty');
 					}
